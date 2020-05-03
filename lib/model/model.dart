@@ -16,5 +16,7 @@ class CovidInfoInterfaceForWorld {
   final int newDeaths;
   final int newRecovered;
   final int newConfirmed;
-  CovidInfoInterfaceForCountries(this.country, this.confirmed, this.deceased, this.recovered, this.newDeaths, this.newRecovered, this.newConfirmed);
+  final int indexVal;
+  final String countryCode;
+  CovidInfoInterfaceForCountries(this.country, this.confirmed, this.deceased, this.recovered, this.newDeaths, this.newRecovered, this.newConfirmed, this.indexVal, this.countryCode);
  }
