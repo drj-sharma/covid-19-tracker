@@ -2,28 +2,37 @@ import 'package:covid19tracker/fetch_data.dart';
 import 'package:covid19tracker/model/model.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'countries_page.dart';
 
-class MainPage extends StatefulWidget {
-  @override
-  _MainPageState createState() => _MainPageState();
-}
+    class MainPage extends StatefulWidget {
+    @override
+    _MainPageState createState() => _MainPageState();
+    }
 
-class _MainPageState extends State<MainPage> {
+    class _MainPageState extends State<MainPage> {
 
-  Future<List<CovidInfoInterfaceForWorld>> _getInfoFromFetchClass() async {
+      var covDate;
+      Map<String, dynamic> covInCountries;
+
+    Future<List<CovidInfoInterfaceForWorld>> _getInfoFromFetchClass() async {
     var res = await FetchData.getInfo();
     var jsonData = json.decode(res.body);
 //    print(jsonData["Global"]);
+      covDate = jsonData["Date"].substring(0, 10);
 
     List<CovidInfoInterfaceForWorld> covidInfo = [];
     CovidInfoInterfaceForWorld covIn = CovidInfoInterfaceForWorld(
         jsonData["Global"]["TotalConfirmed"], jsonData["Global"]["TotalDeaths"],
         jsonData["Global"]["TotalRecovered"], jsonData["Global"]["NewDeaths"],
-        jsonData["Global"]["NewRecovered"], jsonData["Global"]["NewConfirmed"]);
+        jsonData["Global"]["NewRecovered"], jsonData["Global"]["NewConfirmed"],);
     print(covIn.confirmed);
+    covInCountries = json.decode(res.body);
     covidInfo.add(covIn);
     print(covidInfo.length);
     print(covidInfo);
+    print("MAP");
+    print(covInCountries.length);
+    print(covInCountries['Countries'].length);
     return covidInfo;
   }
 
@@ -63,6 +72,12 @@ class _MainPageState extends State<MainPage> {
                                   SizedBox(height: 20.0),
                                   Image(image: new AssetImage('images/world.png',), width: 80.0),
                                   SizedBox(height: 20.0),
+                                  ListTile(
+                                    title: Center(child: Text(covDate, style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue[900]
+                                    ),))
+                                  ),
                                   Ink(
                                     color: Colors.blue[200],
                                   child:
@@ -143,7 +158,10 @@ class _MainPageState extends State<MainPage> {
                               trailing: Icon(Icons.navigate_next, size: 55,),
                                 contentPadding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 30.0),
                                 onTap: () {
-                                  // do something
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => new CountriesPage(countryData: this.covInCountries,))
+                                  );
                                 },
                               ),
                                   SizedBox(height: 10.0,),
@@ -167,29 +185,3 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
-//
-//Center(
-//child: Card(
-//child: Column(
-//children: <Widget>[
-//const ListTile(
-//title: Text('Total Confirmed', style: TextStyle(color: Colors.pink, fontSize: 30),),
-//subtitle: Text('sda')
-//),
-//ButtonBar(
-//children: <Widget>[
-//FlatButton(
-//child: const Text('BUY TICKETS'),
-//onPressed: () { /* ... */ },
-//),
-//FlatButton(
-//child: const Text('LISTEN'),
-//onPressed: () { /* ... */ },
-//),
-//],
-//),
-//],
-//),
-//),
-//)
