@@ -3,6 +3,8 @@ import 'package:covid19tracker/model/model.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'countries_page.dart';
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/animation.dart';
 
     class MainPage extends StatefulWidget {
     @override
@@ -41,7 +43,7 @@ import 'countries_page.dart';
     super.initState();
     _getInfoFromFetchClass();
   }
-
+  String _animationName = "down";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,9 +58,14 @@ import 'countries_page.dart';
               future: _getInfoFromFetchClass(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.data == null) {
-                  return Container(
-                    child: Center(
-                      child: Text("Loading..."),
+                  return Center(
+                    child: Container(
+                      width: 150.0,
+                        child: FlareActor(
+                          'images/progress_indicator.flr',
+                          alignment: Alignment.center,
+                          animation: _animationName,
+                        ),
                     ),
                   );
                 } else {

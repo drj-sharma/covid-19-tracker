@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'balootamma',
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.brown,
       ),
       home: MainPage(),
     );
