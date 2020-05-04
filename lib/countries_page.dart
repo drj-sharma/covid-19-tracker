@@ -16,7 +16,7 @@ class _CountriesPageState extends State<CountriesPage> {
 
   int countryIndex;
 
-  int indexValue = 100;
+  int indexValue = 101;
 
   void changeToModel() {
     List<dynamic> countries = widget.countryData["Countries"];
